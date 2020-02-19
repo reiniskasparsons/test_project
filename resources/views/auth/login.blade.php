@@ -24,6 +24,11 @@
                             {{session('success')}}
                         </div>
                     @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{session('error')}}
+                        </div>
+                    @endif
                     {{-- Login form starts--}}
                     <form action="{{url('post-login')}}" method="POST">
                         {{ csrf_field() }}

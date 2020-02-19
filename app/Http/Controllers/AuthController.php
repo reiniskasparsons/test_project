@@ -58,7 +58,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Route post /register
+     * Route post /post-register
      * Validates user input data, registers the user
      *
      * @param Request $request
@@ -81,12 +81,51 @@ class AuthController extends Controller
         //Create user
         User::create([
             'name' => $data['name'],
-            'email' => strtolower($data['email']),
+            'email' => trim(strtolower($data['email'])),
             'password' => Hash::make($data['password'])
         ]);
 
         return Redirect::to("/")->withSuccess('Great! You have successfully registered!');
     }
+
+    /**
+     * Route post /post-login
+     * Posts login credentials and logs in if found user, else returns error
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postLogin(Request $request)
+    {
+        //Validate input data
+        request()->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        //Setup credentials in variable
+        $credentials = $request->only('email', 'password');
+        //Change email to lower string like in registration form
+        $credentials['email'] = trim(strtolower($credentials['email']));
+        //Attempt auth and redirect if successful
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('dashboard');
+        }
+        //Returns error to login view
+        return Redirect::to("login")->withError('Oops! You have entered invalid credentials.');
+    }
+
+    /**
+     * Route / if logged in or /dashboard
+     * Shows the RSS feed and logout option
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function dashboard()
+    {
+        if (Auth::check()) {
+            return view('dashboard');
+        }
+        return Redirect::to("login");
+    }
+
 
     /**
      * Check database connection, if something is wrong return false
