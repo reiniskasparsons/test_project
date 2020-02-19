@@ -38,3 +38,5 @@ If you successfully installed everything please run the following command
 ``` npm install ``` from root directory of this project.
 
 After the installation process run ```npm run production```
+
+To access the RSS feed you'll need to register and log in with the user.
