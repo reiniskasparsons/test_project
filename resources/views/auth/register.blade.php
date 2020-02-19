@@ -20,14 +20,14 @@
                 <div class="col-md-12 col-lg-12">
                     <h3 class="login-heading mb-4">Please register!</h3>
                     {{-- Registration form starts--}}
-                    <form action="{{url('post-registration')}}" method="POST">
+                    <form action="{{url('post-register')}}" method="POST">
                         {{ csrf_field() }}
                         <div class="form-label-group">
                             <label for="inputName">Name</label>
                             <input type="text" id="inputName" name="name" class="form-control"
                                    placeholder="Full name" autofocus>
                             @if ($errors->has('name'))
-                                <span class="error">{{ $errors->first('name') }}</span>
+                                <span class="text-danger">{{ $errors->first('name') }}</span>
                             @endif
 
                         </div>
@@ -36,7 +36,7 @@
                             <input type="email" name="email" id="inputEmail" class="form-control"
                                    placeholder="some.email@example.com">
                             @if ($errors->has('email'))
-                                <span class="error">{{ $errors->first('email') }}</span>
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
 
@@ -44,7 +44,7 @@
                             <label for="inputPassword">Password</label>
                             <input type="password" name="password" class="form-control">
                             @if ($errors->has('password'))
-                                <span class="error">{{ $errors->first('password') }}</span>
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
                             @endif
                         </div>
                         <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2"

@@ -15,4 +15,4 @@ Route::get('/', 'AuthController@index');
 Route::get('login', 'AuthController@index');
 Route::get('register', 'AuthController@register');
 Route::get('logout', 'AuthController@logout');
-
+Route::post('post-register', 'AuthController@postRegister');

@@ -19,6 +19,11 @@
             <div class="row">
                 <div class="col-md-12 col-lg-12">
                     <h3 class="login-heading mb-4">Please login!</h3>
+                    @if(session('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{session('success')}}
+                        </div>
+                    @endif
                     {{-- Login form starts--}}
                     <form action="{{url('post-login')}}" method="POST">
                         {{ csrf_field() }}
@@ -26,7 +31,7 @@
                             <label for="inputEmail">Email address</label>
                             <input type="email" name="email" class="form-control" placeholder="some.email@example.com">
                             @if ($errors->has('email'))
-                                <span class="error">{{ $errors->first('email') }}</span>
+                                <span class="text-danger">{{ $errors->first('email') }}</span>
                             @endif
                         </div>
 
@@ -34,7 +39,7 @@
                             <label for="inputPassword">Password</label>
                             <input type="password" name="password" class="form-control">
                             @if ($errors->has('password'))
-                                <span class="error">{{ $errors->first('password') }}</span>
+                                <span class="text-danger">{{ $errors->first('password') }}</span>
                             @endif
                         </div>
 
