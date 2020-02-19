@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feed;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,8 @@ class AuthController extends Controller
         //Check if authorized
         if (Auth::check()) {
             //Load dashboard view
-            return view('dashboard');
+            $feed  = (new Feed())->getFeed();
+            return view('dashboard', ['feed' => $feed]);
         }
         return view('auth/login');
     }
@@ -121,7 +123,8 @@ class AuthController extends Controller
     public function dashboard(Request $request)
     {
         if (Auth::check()) {
-            return view('dashboard');
+            $feed  = (new Feed())->getFeed();
+            return view('dashboard', ['feed' => $feed]);
         }
         return Redirect::to("login");
     }
