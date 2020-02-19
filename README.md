@@ -24,3 +24,17 @@ DB_PASSWORD=
 ```
 
 After this be sure to run `php artisan migrate` from project root directory. If something goes wrong, check the database connection.
+
+Laravel mix relies on node and npm. 
+#####Installing Node
+Before triggering Mix, you must first ensure that Node.js and NPM are installed on your machine.
+```
+node -v
+npm -v
+```
+By default, Laravel Homestead includes everything you need; however, if you aren't using Vagrant, then you can easily install the latest version of Node and NPM using simple graphical installers from their [download page](https://nodejs.org/en/download/).
+ 
+If you successfully installed everything please run the following command
+``` npm install ``` from root directory of this project.
+
+After the installation process run ```npm run production```

@@ -118,7 +118,7 @@ class AuthController extends Controller
      * Shows the RSS feed and logout option
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         if (Auth::check()) {
             return view('dashboard');
@@ -142,6 +142,27 @@ class AuthController extends Controller
             return false;
         }
         return true;
+    }
+
+    /**
+     * Route /check-email
+     * Checks if user exists
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function checkEmailAvailability(Request $request){
+        //get email and trim and set it to lowerstring for check
+        $email = trim(strtolower($request->post('email')));
+        //Try and find the user
+        $user  = User::where('email', $email)->first();
+        //If user found sets to true not send user with variables to view else set it to false since laravel sets it to null
+        if($user) {
+            $user = true;
+        }else {
+            $user = false;
+        }
+        //Return json response for view
+        return response()->json(['user'=> $user], 200);
     }
 }
 

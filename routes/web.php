@@ -20,3 +20,5 @@ Route::post('post-register', 'AuthController@postRegister');
 Route::post('post-login', 'AuthController@postLogin');
 
 Route::get('dashboard', 'AuthController@dashboard');
+
+Route::post('check-email', 'AuthController@checkEmailAvailability');

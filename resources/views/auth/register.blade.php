@@ -9,7 +9,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{url('style.css')}}">
+
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+    <script src="{{ mix('/js/app.js') }}"></script>
+
 
 </head>
 <body>
@@ -32,12 +35,13 @@
 
                         </div>
                         <div class="form-label-group m-1">
-                            <label for="inputEmail">Email address</label>
-                            <input type="email" name="email" id="inputEmail" class="form-control"
+                            <label for="input-email">Email address</label>
+                            <input type="email" name="email" id="input-email" class="form-control"
                                    placeholder="some.email@example.com">
                             @if ($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                             @endif
+                            <span id="js-email-taken" class="text-danger d-none">This email already in use!</span>
                         </div>
 
                         <div class="form-label-group m-1">
