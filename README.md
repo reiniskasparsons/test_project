@@ -11,6 +11,8 @@ setup the project.
 
 Download the project from GIT.
 
+Run ```composer install``` in root directory.
+
 Setup the .env file, you can do it by copying the .env.example file t o .env.
 
 In .env file it is crucial to fill these variables so that migrations can be run
