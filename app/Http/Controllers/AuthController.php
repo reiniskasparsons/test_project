@@ -26,7 +26,8 @@ class AuthController extends Controller
         if (Auth::check()) {
             //Load dashboard view
             $feed  = (new Feed())->getFeed();
-            return view('dashboard', ['feed' => $feed]);
+            $topCommonWords = (new Feed())->getCommonWords($feed);
+            return view('dashboard', ['feed' => $feed, 'topWords' => $topCommonWords]);
         }
         return view('auth/login');
     }
@@ -124,7 +125,8 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             $feed  = (new Feed())->getFeed();
-            return view('dashboard', ['feed' => $feed]);
+            $topCommonWords = (new Feed())->getCommonWords($feed);
+            return view('dashboard', ['feed' => $feed, 'topWords' => $topCommonWords]);
         }
         return Redirect::to("login");
     }

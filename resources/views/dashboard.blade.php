@@ -30,6 +30,15 @@
                             </div>
                         </div>
                     </div>
+                    {{--Top words are echoed here--}}
+                    <div class="col-md-12">
+                        Top 10 words of the feed are :
+                        @foreach($topWords as $word=>$count)
+                            <div class="card d-inline">
+                                <strong>{{$word}}</strong> used <strong>{{$count}}</strong> times.
+                            </div>
+                        @endforeach
+                    </div>
                     {{--RSS feed goes here--}}
                     @foreach($feed->entry as $entry)
                         <div class="col-md-12">
