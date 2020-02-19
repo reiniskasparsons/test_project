@@ -11,11 +11,11 @@ setup the project.
 
 Download the project from GIT.
 
-Run ```composer install``` in root directory.
+Run ```composer install``` in root directory. Wait until it finishes.
 
-Setup the .env file, you can do it by copying the .env.example file t o .env.
+Setup the .env file, you can do it by copying the .env.example file to .env.
 
-In .env file it is crucial to fill these variables so that migrations can be run
+In .env file it is crucial to fill these variables so that migrations can be run and make sure the database exists
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -42,3 +42,9 @@ If you successfully installed everything please run the following command
 After the installation process run ```npm run production```
 
 To access the RSS feed you'll need to register and log in with the user.
+
+Generate the app key using command 
+
+```php artisan key:generate```
+
+After all this the project should be up and running.
