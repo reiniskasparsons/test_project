@@ -69,7 +69,28 @@ class FeedHelper
      */
     public static function mostCommonWordsArray()
     {
-        return ['the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'I', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me'];
+        $c = curl_init(env('COMMON_WORDS_TABLE','https://en.wikipedia.org/wiki/Most_common_words_in_English'));
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+        $html = curl_exec($c);
+        curl_close($c);
+        $dom = new \DOMDocument();
+        $dom->loadHTML($html);
+        $dom->preserveWhiteSpace = false;
+        $tables = $dom->getElementsByTagName('table');
+
+        $topCommonWordTable = $tables->item(0);
+        $topWordsArray = [];
+        $count = 0;
+        foreach ($topCommonWordTable->getElementsByTagName('tr') as $tr) {
+            $tds = $tr->getElementsByTagName('td');
+            if($tds->length > 0) {
+                if ($count < 50) {
+                    $topWordsArray[] = $tds->item(0)->nodeValue;
+                }
+                $count++;
+            }
+        }
+        return $topWordsArray;
     }
 
 }

@@ -15,7 +15,7 @@ Run ```composer install``` in root directory. Wait until it finishes.
 
 Setup the .env file, you can do it by copying the .env.example file to .env.
 
-In .env file it is crucial to fill these variables so that migrations can be run and make sure the database exists. Also the RSS_URL should be created.
+In .env file it is crucial to fill these variables so that migrations can be run and make sure the database exists
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -23,8 +23,6 @@ DB_PORT=3306
 DB_DATABASE=laravel
 DB_USERNAME=root
 DB_PASSWORD=
-
-RSS_URL="https://www.theregister.co.uk/software/headlines.atom"
 ```
 
 After this be sure to run `php artisan migrate` from project root directory. If something goes wrong, check the database connection.
@@ -48,5 +46,13 @@ To access the RSS feed you'll need to register and log in with the user.
 Generate the app key using command 
 
 ```php artisan key:generate```
+
+For RSS feed and wiki article with 50 moist common words fill these .env variables. If the .env variables do not exist it will default to these links.
+
+```
+RSS_URL="https://www.theregister.co.uk/software/headlines.atom"
+
+COMMON_WORDS_TABLE="https://en.wikipedia.org/wiki/Most_common_words_in_English"
+```
 
 After all this the project should be up and running.
