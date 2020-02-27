@@ -7,90 +7,25 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-
     /**
      * Route /
      * If logged in loads logged in view else login form
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function login()
     {
         //Check if authorized
         if (Auth::check()) {
-            //Load dashboard view
-            $feed  = (new Feed())->getFeed();
-            $topCommonWords = (new Feed())->getCommonWords($feed);
-            return view('dashboard', ['feed' => $feed, 'topWords' => $topCommonWords]);
+            return redirect('/');
         }
         return view('auth/login');
     }
-
-    /**
-     * Route /register
-     * If authorized redirects  to dashboard
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function register()
-    {
-        //Check if authorized
-        if (Auth::check()) {
-            //Redirect to dashboard
-            return Redirect::to("dashboard");
-        }
-        return view('auth/register');
-    }
-
-    /**
-     * Route /logout
-     * Logs out user
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function logout()
-    {
-        Session::flush();
-        Auth::logout();
-        return Redirect('login');
-    }
-
-    /**
-     * Route post /post-register
-     * Validates user input data, registers the user
-     *
-     * @param Request $request
-     * @return mixed
-     */
-    public function postRegister(Request $request)
-    {
-        //Check database connection, if something wrong return error
-        if($this->checkDBConnection() === false) {
-            die("Could not find the database. Please check your configuration.");
-        }
-        //Validate name, email and password
-        request()->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-        ]);
-        //Put everything that is
-        $data = $request->all();
-        //Create user
-        User::create([
-            'name' => $data['name'],
-            'email' => trim(strtolower($data['email'])),
-            'password' => Hash::make($data['password'])
-        ]);
-
-        return Redirect::to("/")->withSuccess('Great! You have successfully registered!');
-    }
-
     /**
      * Route post /post-login
      * Posts login credentials and logs in if found user, else returns error
@@ -117,58 +52,17 @@ class AuthController extends Controller
     }
 
     /**
-     * Route / if logged in or /dashboard
-     * Shows the RSS feed and logout option
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * Route /logout
+     * Logs out user
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function dashboard(Request $request)
+    public function logout()
     {
-        if (Auth::check()) {
-            $feed  = (new Feed())->getFeed();
-            $topCommonWords = (new Feed())->getCommonWords($feed);
-            return view('dashboard', ['feed' => $feed, 'topWords' => $topCommonWords]);
-        }
-        return Redirect::to("login");
+        Session::flush();
+        Auth::logout();
+        return Redirect('login');
     }
 
-
-    /**
-     * Check database connection, if something is wrong return false
-     *
-     * @return bool
-     */
-    public function checkDBConnection(){
-        try {
-            DB::connection()->getPdo();
-            if(!DB::connection()->getDatabaseName()){
-               return false;
-            }
-        } catch (\Exception $e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Route /check-email
-     * Checks if user exists
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function checkEmailAvailability(Request $request){
-        //get email and trim and set it to lowerstring for check
-        $email = trim(strtolower($request->post('email')));
-        //Try and find the user
-        $user  = User::where('email', $email)->first();
-        //If user found sets to true not send user with variables to view else set it to false since laravel sets it to null
-        if($user) {
-            $user = true;
-        }else {
-            $user = false;
-        }
-        //Return json response for view
-        return response()->json(['user'=> $user], 200);
-    }
 }
 
 

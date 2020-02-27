@@ -47,4 +47,12 @@ Generate the app key using command
 
 ```php artisan key:generate```
 
+For RSS feed and wiki article with 50 moist common words fill these .env variables. If the .env variables do not exist it will default to these links.
+
+```
+RSS_URL="https://www.theregister.co.uk/software/headlines.atom"
+
+COMMON_WORDS_TABLE="https://en.wikipedia.org/wiki/Most_common_words_in_English"
+```
+
 After all this the project should be up and running.

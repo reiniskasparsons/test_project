@@ -10,15 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'AuthController@index');
+Route::get('/', 'FeedController@index');
 
-Route::get('login', 'AuthController@index');
-Route::get('register', 'AuthController@register');
+Route::get('login', 'AuthController@login');
 Route::get('logout', 'AuthController@logout');
-
-Route::post('post-register', 'AuthController@postRegister');
 Route::post('post-login', 'AuthController@postLogin');
 
-Route::get('dashboard', 'AuthController@dashboard');
+Route::post('post-register', 'RegisterController@postRegister');
+Route::post('check-email', 'RegisterController@checkEmailAvailability');
+Route::get('register', 'RegisterController@register');
 
-Route::post('check-email', 'AuthController@checkEmailAvailability');
+
+Route::get('dashboard', 'FeedController@dashboard');
+
