@@ -15,7 +15,7 @@ Run ```composer install``` in root directory. Wait until it finishes.
 
 Setup the .env file, you can do it by copying the .env.example file to .env.
 
-In .env file it is crucial to fill these variables so that migrations can be run and make sure the database exists
+In .env file it is crucial to fill these variables so that migrations can be run and make sure the database exists. Also the RSS_URL should be created.
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -23,6 +23,8 @@ DB_PORT=3306
 DB_DATABASE=laravel
 DB_USERNAME=root
 DB_PASSWORD=
+
+RSS_URL="https://www.theregister.co.uk/software/headlines.atom"
 ```
 
 After this be sure to run `php artisan migrate` from project root directory. If something goes wrong, check the database connection.
